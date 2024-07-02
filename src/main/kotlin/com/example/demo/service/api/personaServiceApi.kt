@@ -1,7 +1,7 @@
 package com.example.demo.service.api
 
 import com.example.demo.commons.genericServiceApi
-import com.example.demo.model.persona
+import com.example.demo.model.empleado
 
-interface personaServiceApi : genericServiceApi<persona, Long> {
+interface personaServiceApi : genericServiceApi<empleado, Long> {
 }

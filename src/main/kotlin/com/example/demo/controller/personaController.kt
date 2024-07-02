@@ -1,6 +1,6 @@
 package com.example.demo.controller
 
-import com.example.demo.model.persona
+import com.example.demo.model.empleado
 import com.example.demo.service.api.personaServiceApi
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -18,24 +18,30 @@ class personaController {
     lateinit var personaServiceApi: personaServiceApi
 
     @RequestMapping("/all")
-    fun getAll() : MutableList<persona>{
+    fun getAll() : MutableList<empleado>{
         return personaServiceApi.all
     }
 
     @RequestMapping("/save")
-    fun save(@RequestBody persona: persona) : ResponseEntity<persona>{
-        var obj = personaServiceApi.save(persona);
-        return ResponseEntity<persona>(persona, HttpStatus.OK)
+    fun save(@RequestBody persona: empleado) : ResponseEntity<empleado>{
+        val obj = personaServiceApi.save(persona);
+        return ResponseEntity<empleado>(obj, HttpStatus.CREATED)
+    }
+
+    @RequestMapping("/get/{id}")
+    fun getById(@PathVariable("id") id : Long) : ResponseEntity<empleado>{
+        val obj = personaServiceApi.get(id);
+        return ResponseEntity<empleado>(obj, HttpStatus.OK)
     }
 
     @RequestMapping("/delete/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<persona>{
+    fun delete(@PathVariable id: Long): ResponseEntity<empleado>{
         val persona = personaServiceApi.get(id)
         if (persona != null) {
             personaServiceApi.delete(id)
         } else {
-            return ResponseEntity<persona>(HttpStatus.NO_CONTENT)
+            return ResponseEntity<empleado>(HttpStatus.NO_CONTENT)
         }
-        return ResponseEntity<persona>(persona, HttpStatus.OK)
+        return ResponseEntity<empleado>(persona, HttpStatus.OK)
     }
 }
